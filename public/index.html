@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="stylesheet" href="../src/output.css"> -->
+  <style>
+    ::-webkit-scrollbar {
+      width: 5px;
+      /* Width of the scrollbar */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: lightgray;
+      /* Color of the thumb */
+      border-radius: 10px;
+      /* Curved ends */
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+      /* Color of the track */
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="https://www.svgrepo.com/show/6995/chat.svg" class="h-8" alt="Chat Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ChitChat</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul
+          class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="#"
+              class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="./rooms.html"
+              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Rooms</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div id="toast-warning"
+    class="hidden fixed items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+    role="alert" style="top:10%; right:1%">
+    <div
+      class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+        viewBox="0 0 20 20">
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z" />
+      </svg>
+      <span class="sr-only">Alert</span>
+    </div>
+    <div class="ms-3 text-sm font-normal" id="toast_msg">Admin Left</div>
+    <!-- <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Close">
+      <span class="sr-only">Close</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+  </button> -->
+  </div>
+
+
+  <div id="create_room_form">
+    <section class="bg-gray-50 dark:bg-gray-900">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <!-- <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
+            Flowbite    
+        </a> -->
+        <div
+          class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Create Room
+            </h1>
+            <form class="space-y-4 md:space-y-6" id="create_room_form_fields" onsubmit="handle_create_room(event)">
+              <div>
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Room
+                  description</label>
+                <input type="text" name="description" id="description"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Room Description" required />
+              </div>
+              <div>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
+                <input type="text" name="name" id="name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Your Name" required />
+              </div>
+              <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password
+                  (optional)</label>
+                <input type="password" name="password" id="password" placeholder="••••••••" pattern="^\S*$"
+                  title="No whitespace allowed"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+              </div>
+              <button type="submit"
+                class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create
+                Room</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="chat_page" class="hidden" style="padding-right:10px">
+    <div class="flex" style="gap:20px;height:88vh">
+      <div style="width:80%;overflow-y: scroll; padding:0px 10px;" class="child1 flex flex-col justify-between">
+        <div id="chat_area" class="flex items-start flex-col gap-2.5">
+
+          <!-- Chat goes here  -->
+
+
+        </div>
+
+        <div style="position: sticky; z-index: 1; left:1px;bottom: 1px; width: 100%;">
+          <!-- <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Small
+            input</label> -->
+          <form action="#" onsubmit="chat_send(event)">
+            <div class="flex gap-1">
+              <input type="text" id="chat"
+                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required>
+
+              <button type="submit">
+                <div id="toast-simple"
+                  class="flex items-center p-4 space-x-4 rtl:space-x-reverse text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800 hover:bg-gray-50">
+                  <svg class="w-5 h-5 text-blue-600 dark:text-blue-500 rotate-45" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9" />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <div style="width:20%" class="child2">
+        <h1
+          class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-xl dark:text-white flex justify-center align-items-center mt-3">
+          Admin</h1>
+
+        <ul id="admin" class="max-w-xs flex flex-col my-3">
+          <li
+            class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+            <!-- admin name -->
+          </li>
+
+        </ul>
+
+        <h1
+          class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-xl dark:text-white flex justify-center align-items-center mt-3">
+          Members</h1>
+
+        <ul id="members" class="max-w-xs flex flex-col">
+          <!-- Memebers goes here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io();
+    // socket.on("msg",(data)=>{
+    //   console.log(data)
+    // })
+    let room_no;
+    document.getElementById("chat_page").style.display = "none"
+
+    const handle_create_room = (e) => {
+      e.preventDefault()
+      let password = document.getElementById("password").value
+      let name = document.getElementById("name").value
+      let description = document.getElementById("description").value
+      if (password.length === 0)
+        socket.emit('create_room', null, description, name)
+      else
+        socket.emit('create_room', password, description, name)
+
+      // document.getElementById("create_room_form_fields").reset()
+
+      document.getElementById("chat_area").innerHTML = ""
+      document.getElementById("chat_area").innerHTML = `<div id="typing_effect_tag" class="invisible bg-white font-semibold text-gray-900 dark:text-white w-full">
+            Typing...
+          </div>`
+    }
+
+    let remove_user = (user_id) => {
+      socket.emit("remove_user_room",user_id,room_no)
+    }
+
+    let chat_event = document.getElementById("chat")
+    chat_event.addEventListener('input', () => {
+      if (room_no)
+        socket.emit("typing_effect", room_no)
+    })
+
+    function getIndianTime() {
+      const indianTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata', timeStyle: 'short' });
+      return indianTime;
+    }
+
+    let chat_send = (e) => {
+      e.preventDefault()
+      let chat = document.getElementById("chat").value
+      socket.emit("chat_send", chat, room_no)
+      document.getElementById("chat").value = ""
+
+      // document.getElementById("chat_area").innerHTML += `
+      // <div style="width:100%" class="flex justify-end">
+      //     <div class="flex flex-col gap-1 w-full max-w-[320px]">
+      //       <div class="flex items-center space-x-2 rtl:space-x-reverse">
+      //         <span class="text-sm font-semibold text-gray-900 dark:text-white">me</span>
+      //         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">${getIndianTime()}</span>
+      //       </div>
+      //       <div
+      //         class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+      //         <p class="text-sm font-normal text-gray-900 dark:text-white">${chat}</p>
+      //       </div>
+      //     </div>
+      //     </div>`
+
+      
+
+
+      let create_div=document.createElement("div")
+      create_div.className="flex justify-end w-full"
+
+      create_div.innerHTML=`<div class="flex flex-col gap-1 w-full max-w-[320px]">
+             <div class="flex items-center space-x-2 rtl:space-x-reverse">
+               <span class="text-sm font-semibold text-gray-900 dark:text-white">me</span>
+               <span class="text-sm font-normal text-gray-500 dark:text-gray-400">${getIndianTime()}</span>
+             </div>
+             <div
+               class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+               <p class="text-sm font-normal text-gray-900 dark:text-white">${chat}</p>
+             </div>
+           </div>`
+
+      document.getElementById("chat_area").insertBefore(create_div,document.getElementById("typing_effect_tag"))
+
+    }
+
+    socket.on("res_create_room", (response, room) => {
+      if (response)
+      // window.location.href = window.location.protocol + "//" + window.location.host + "/rooms"
+      {
+        room_no = room
+        document.getElementById("admin").innerHTML = ""
+        document.getElementById("admin").innerHTML = `<li
+          class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+          ${response.users[Object.keys(response.users)[0]]}
+        </li>`
+        document.getElementById("create_room_form").style.display = "none"
+        document.getElementById("chat_page").style.display = "block"
+      }
+    })
+
+
+
+    socket.on('res_join_user', (response) => {
+      let member = document.getElementById("members")
+      if (response) {
+        member.innerHTML = ""
+        let flag = true
+        for (let obj in response.users) {
+          if (flag) {
+            document.getElementById("admin").innerHTML = ""
+            document.getElementById("admin").innerHTML = `<li
+          class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+          ${response.users[obj]}
+        </li>`
+            flag = false
+          }
+          else {
+            member.innerHTML += `
+        <li
+            class="inline-flex items-center justify-between gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+            ${response.users[obj]}
+            <button onclick="remove_user('${obj}')">
+              <svg width="24" height="24" fill="#1d4ed8" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M 357 378C 344 378 332 390 333 403C 333 403 329 848 329 848C 329 857 333 866 341 870C 349 875 359 875 366 870C 374 866 379 858 379 849C 379 849 383 404 383 404C 383 397 380 391 375 386C 371 381 364 378 357 378C 357 378 357 378 357 378M 650 375C 636 375 625 386 625 400C 625 400 625 850 625 850C 625 859 630 867 637 872C 645 876 655 876 663 872C 670 867 675 859 675 850C 675 850 675 400 675 400C 675 393 672 387 668 382C 663 377 656 375 650 375C 650 375 650 375 650 375M 500 375C 486 375 475 386 475 400C 475 400 475 850 475 850C 475 859 480 867 487 872C 495 876 505 876 513 872C 520 867 525 859 525 850C 525 850 525 400 525 400C 525 393 522 387 518 382C 513 377 506 375 500 375C 500 375 500 375 500 375M 198 299C 198 299 800 299 800 299C 800 299 800 850 800 850C 800 913 759 950 700 950C 700 950 300 950 300 950C 238 950 200 911 201 855C 201 855 198 299 198 299M 438 138C 438 138 438 187 438 187C 438 187 563 187 563 187C 563 187 563 138 563 138C 563 138 438 138 438 138M 425 63C 425 63 575 63 575 63C 609 63 638 91 638 125C 638 125 638 187 638 187C 638 187 849 187 849 187C 870 187 887 204 887 225C 887 245 870 262 849 262C 849 262 151 263 151 263C 130 263 113 246 113 225C 113 205 130 188 151 188C 151 188 363 188 363 188C 363 188 363 125 363 125C 363 125 362 125 362 125C 362 91 391 63 425 63C 425 63 425 63 425 63" />
+              </svg>
+            </button>
+          </li>`
+          }
+        }
+        document.getElementById("chat_page").style.display = "block"
+
+      }
+      else {
+        document.getElementById("alert_box").style.display = "block"
+        setTimeout(() => {
+          document.getElementById("alert_box").style.display = "none"
+        }, 2000)
+
+      }
+
+    })
+
+
+    // socket.on("remove_all", () => {
+
+    // })
+
+    socket.on("user_left", (name) => {
+      document.getElementById("toast-warning").style.display = "flex"
+      document.getElementById("toast_msg").textContent = `${name} left`
+      setTimeout(() => {
+        document.getElementById("toast-warning").style.display = "none"
+      }, 2000)
+    })
+
+
+    socket.on("chat_receive", (chat, who_sent, timestamp) => {
+
+      
+      let create_div=document.createElement("div")
+      create_div.className="flex flex-col gap-1 w-full max-w-[320px]"
+      create_div.innerHTML=` <div class="flex items-center space-x-2 rtl:space-x-reverse">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">${who_sent}</span>
+              <span class="text-sm font-normal text-gray-500 dark:text-gray-400">${timestamp}</span>
+            </div>
+            <div
+              class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+              <p class="text-sm font-normal text-gray-900 dark:text-white"> ${chat}</p>
+        </div>`
+
+        document.getElementById("chat_area").insertBefore(create_div,document.getElementById("typing_effect_tag"))
+
+
+    //   document.getElementById("chat_area").innerHTML += `
+      
+    // <div class="flex flex-col gap-1 w-full max-w-[320px]">
+    //   <div class="flex items-center space-x-2 rtl:space-x-reverse">
+    //     <span class="text-sm font-semibold text-gray-900 dark:text-white">${who_sent}</span>
+    //     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">${timestamp}</span>
+    //   </div>
+    //   <div
+    //     class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+    //     <p class="text-sm font-normal text-gray-900 dark:text-white"> ${chat}</p>
+    //   </div>
+    // </div>
+    // `
+    })
+
+
+    socket.on("res_typing_effect", (user_name) => {
+      document.getElementById("typing_effect_tag").style.visibility = "visible"
+      document.getElementById("typing_effect_tag").innerHTML = ""
+      document.getElementById("typing_effect_tag").innerHTML = `${user_name} Typing...`
+      setTimeout(() => {
+        document.getElementById("typing_effect_tag").style.visibility = "hidden"
+      }, 1000)
+    })
+
+    socket.on("removed_user",(response)=>{
+      document.getElementById("toast-warning").style.display="flex"
+      document.getElementById("chat_page").style.display = "none"
+      document.getElementById("toast_msg").innerHTML=`${response} removed by admin`
+      setTimeout(()=>{
+        document.getElementById("toast-warning").style.display="none"
+      },2000)
+    })
+
+
+    
+    socket.on("new_joined_user",(name)=>{
+      document.getElementById("toast-warning").style.display="flex"
+      document.getElementById("toast_msg").innerHTML=`${name} has joined room`
+      setTimeout(()=>{
+        document.getElementById("toast-warning").style.display="none"
+      },2000)
+    })
+
+
+
+  </script>
+</body>
+
+</html>
